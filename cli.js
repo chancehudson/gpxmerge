@@ -19,7 +19,7 @@ const gpxmerge = require('./');
     process.exit(0);
   }
   try {
-    console.log(await gpxmerge(gpsFilePaths));
+    console.log(await gpxmerge(...gpsFilePaths));
   } catch (err) {
     console.log(err);
     process.exit(1);

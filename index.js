@@ -8,7 +8,7 @@ const parseString = promisify(xml2js.parseString);
 const idx = require('idx');
 
 // Parse gpx file content
-async function mergeGpxFiles(gpxDataFiles) {
+async function mergeGpxFiles(...gpxDataFiles) {
   if (gpxDataFiles.length < 2) {
     throw new Error('Must supply at least 2 gpx files');
   }
