@@ -15,6 +15,10 @@
     "merge",
     "cli"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JChanceHud/gpxmerge.git"
+  },
   "author": "Chance Hudson",
   "license": "MIT",
   "dependencies": {
