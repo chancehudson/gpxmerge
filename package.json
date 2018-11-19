@@ -1,22 +1,25 @@
 {
-  "name": "gpsmerge",
+  "name": "gpxmerge",
   "version": "0.0.1",
-  "description": "A tool to merge gpx and tcx files that are close to each other in time",
+  "description": "A tool to merge gpx files",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "bin": {
+    "gpxmerge": "cli.js"
+  },
   "keywords": [
     "gpx",
-    "tcx",
     "gps",
     "merge",
-    "web",
     "cli"
   ],
   "author": "Chance Hudson",
   "license": "MIT",
   "dependencies": {
-    "@ctheory/promisify": "0.0.2"
+    "@ctheory/promisify": "0.0.2",
+    "idx": "^2.5.0",
+    "xml2js": "^0.4.19"
   }
 }
