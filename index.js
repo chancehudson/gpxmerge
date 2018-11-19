@@ -1,47 +1,45 @@
 const fs = require('fs');
-const { argv } = process;
 const { promisify } = require('@ctheory/promisify');
 // Promisify the fs implementation for async/await use
 const readFile = promisify(fs.readFile);
+const writeFile = promisify(fs.writeFile);
+const xml2js = require('xml2js');
+const parseString = promisify(xml2js.parseString);
+const idx = require('idx');
 
-// Use an immediately invoked functional expression to get async/await support
-(async () => {
-  // If we're not being run from the cli exit this function
-  if (require.main !== module) return;
+// Parse gpx file content
+async function mergeGpxFiles(gpxDataFiles) {
+  const files = await readFiles(gpxDataFiles);
+  // If the xml reads as an array flatten the root
+  const _firstXml = await parseString(files.shift());
+  const firstXml = _firstXml[0] ? _firstXml[0] : _firstXml;
 
-  /**
-   * Cut the node binary and index filename arguments off, and take
-   * the rest as tcx filepaths
-   *
-   * Also, no hashbang for windows support ❤️ (and to have a constant here)
-   **/
-  const gpsFilePaths = argv.slice(2);
-  if (gpsFilePaths.length === 0) {
-    // No files supplied on the command line, print help and exit
-    console.group();
-    console.log('Usage: gpsmerge <file1.gpx> <file2.gpx> [...fileX.gpx]');
-    console.groupEnd();
-    process.exit(1);
-  }
+  const parsedFiles = await Promise.all(files.map(file => parseString(file)));
+
+  const _trkpts = parsedFiles.map(_xml => {
+    const xml = _xml[0] ? _xml[0] : _xml;
+    return idx(xml, _ => _.gpx.trk[0].trkseg[0].trkpt) || [];
+  });
+  // Flatten the [ [ nested arrays ] ]
+  const trkpts = [].concat(..._trkpts);
   try {
-    await mergeFiles(gpsFilePaths);
+    firstXml.gpx.trk[0].trkseg[0].trkpt.push(...trkpts);
   } catch (err) {
-    console.log(err);
-    process.exit(1);
+    throw new Error('Error parsing first gpx file.');
   }
-})();
+  const builder = new xml2js.Builder();
+  return builder.buildObject(firstXml);
+}
 
-async function mergeFiles(gpsFilePaths) {
+// An array of strings that are the files, parsed as utf-8
+async function readFiles(gpsFilePaths) {
   // Make sure all paths exist
   for (file of gpsFilePaths) {
     if (!fs.existsSync(file)) throw new Error(`File ${file} doesn't exist.`);
   }
-
-  const files = await Promise.all(
-    gpsFilePaths.map(async file => await readFile(file, 'utf8'))
+  return await Promise.all(
+    gpsFilePaths.map(async file => await readFile(file, 'utf-8'))
   );
-  // An array of strings that are the files
-  console.log(files);
 }
 
-module.exports = mergeFiles;
+module.exports = mergeGpxFiles;
