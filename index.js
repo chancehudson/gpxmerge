@@ -9,6 +9,9 @@ const idx = require('idx');
 
 // Parse gpx file content
 async function mergeGpxFiles(gpxDataFiles) {
+  if (gpxDataFiles.length < 2) {
+    throw new Error('Must supply at least 2 gpx files');
+  }
   const files = await readFiles(gpxDataFiles);
   // If the xml reads as an array flatten the root
   const _firstXml = await parseString(files.shift());

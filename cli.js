@@ -18,10 +18,6 @@ const gpxmerge = require('./');
     console.groupEnd();
     process.exit(0);
   }
-  if (gpsFilePaths.length <= 1) {
-    console.log('Must supply a minimum of 2 filepaths');
-    process.exit(1);
-  }
   try {
     console.log(await gpxmerge(gpsFilePaths));
   } catch (err) {
