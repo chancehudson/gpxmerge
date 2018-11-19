@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const { argv } = process;
-const gpsmerge = require('./');
+const gpxmerge = require('./');
 
 // Use an immediately invoked functional expression to get async/await support
 (async () => {
@@ -13,7 +13,7 @@ const gpsmerge = require('./');
   if (gpsFilePaths.length === 0) {
     // No files supplied on the command line, print help and exit
     console.group();
-    console.log('Usage: gpsmerge <file1.gpx> <file2.gpx> [...fileX.gpx]');
+    console.log('Usage: gpxmerge <file1.gpx> <file2.gpx> [...fileX.gpx]');
     console.log('Merges trkpt elements in each gpx file, in the order supplied');
     console.groupEnd();
     process.exit(0);
@@ -23,7 +23,7 @@ const gpsmerge = require('./');
     process.exit(1);
   }
   try {
-    console.log(await gpsmerge(gpsFilePaths));
+    console.log(await gpxmerge(gpsFilePaths));
   } catch (err) {
     console.log(err);
     process.exit(1);
