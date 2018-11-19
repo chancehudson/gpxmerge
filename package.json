@@ -25,5 +25,8 @@
     "@ctheory/promisify": "0.0.2",
     "idx": "^2.5.0",
     "xml2js": "^0.4.19"
+  },
+  "devDependencies": {
+    "ava": "^0.25.0"
   }
 }
