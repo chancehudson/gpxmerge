@@ -1,4 +1,4 @@
-# gpxmerge [![npm](https://img.shields.io/npm/v/gpxmerge.svg)](https://www.npmjs.com/package/gpxmerge)
+# gpxmerge [![Build Status](https://travis-ci.org/JChanceHud/gpxmerge.svg?branch=master)](https://travis-ci.org/JChanceHud/gpxmerge) [![npm](https://img.shields.io/npm/v/gpxmerge.svg)](https://www.npmjs.com/package/gpxmerge)
 
 A tool for merging multiple gpx files. It takes the metadata from the first file and appends trackpoints from all other supplied files.
 
