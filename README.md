@@ -45,3 +45,7 @@ Written to file:
 ```sh
 $ gpxmerge ./test/file1.gpx ./test/file2.gpx > merged.gpx
 ```
+
+## Inspiration
+
+Built to fulfill my need to document every mile I ever ride on my [beeceecle](https://www.strava.com/activities/1973133843).
